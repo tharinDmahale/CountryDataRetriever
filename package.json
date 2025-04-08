@@ -1,0 +1,17 @@
+{
+  "name": "6cosc022c-advanced-server-side-web-programming-cw",
+  "version": "1.0.0",
+  "description": "6cosc022c-advanced-server-side-web-programming-cw",
+  "main": "index.js",
+  "scripts": {
+    "server": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tharinDmahale/6COSC022C-Advanced-Server-Side-Web-Programming-CW.git"
+  },
+  "keywords": [],
+  "author": "Tharin D Mahale",
+  "license": "ISC",
+  "homepage": "https://github.com/tharinDmahale/6COSC022C-Advanced-Server-Side-Web-Programming-CW#readme"
+}
