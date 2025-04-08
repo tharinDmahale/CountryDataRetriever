@@ -12,5 +12,8 @@
   },
   "author": "Tharin Deelaka Mahale",
   "license": "ISC",
-  "homepage": "https://github.com/tharinDmahale/6COSC022C-Advanced-Server-Side-Web-Programming-CW#readme"
+  "homepage": "https://github.com/tharinDmahale/6COSC022C-Advanced-Server-Side-Web-Programming-CW#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }

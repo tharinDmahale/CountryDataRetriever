@@ -1,8 +1,10 @@
 "use strict";
 
+const Server = require("./server/Server");
+
 class Main {
     static main() {
-        console.log("Hello, World!");
+        Server.start();
     }
 }
 
