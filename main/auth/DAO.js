@@ -8,8 +8,17 @@ class DAO {
         await Database.write(`INSERT INTO tokens (tokenid, tokencontent, userid) VALUES ('${tokenid}', '${token}', '${userid}')`);
     }
 
-    static async getToken(tokenid) {
+    static async getTokenById(tokenid) {
         return ((await Database.read(`SELECT * FROM tokens WHERE tokenid='${tokenid}'`))[0]);
+    }
+
+    static async userHasToken(userid) {
+        const tokens = (await Database.read(`SELECT * FROM tokens WHERE userid='${userid}'`));
+        return (tokens.length > 0);
+    }
+
+    static async getTokenByUserId(userid) {
+        return ((await Database.read(`SELECT * FROM tokens WHERE userid='${userid}'`))[0]);
     }
 
     static async hasToken(tokenid) {
