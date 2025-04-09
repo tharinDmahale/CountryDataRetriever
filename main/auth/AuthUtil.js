@@ -7,16 +7,20 @@ const DAO = require("./DAO");
 
 class AuthUtil {
     static async createAccessToken(user) {
+        let token;
+        const userid = user.userid;
+
         if (await DAO.userHasToken(user.userid)) {
-            return (await DAO.getTokenByUserId(user.userid));
+            token = (await DAO.getTokenByUserId(userid));
 
         } else {
             const tokenid = uuidv4();
-            const userid = user.userid;
-            const token = jwt.sign({ tokenid: tokenid, userid: userid }, AuthConfig.getAccessTokenSecret());
-            await DAO.createToken(tokenid, token, userid);
-            return (await DAO.getTokenById(tokenid));
+            const tokencontent = jwt.sign({ tokenid: tokenid, userid: userid }, AuthConfig.getAccessTokenSecret());
+            await DAO.createToken(tokenid, tokencontent, userid);
+            token = (await DAO.getTokenById(tokenid));
         }
+
+        return token;
     }
 
     static async verifyAccessToken(token) {
@@ -29,7 +33,7 @@ class AuthUtil {
                 verified = false;
 
             } else {
-                if (await DAO.hasToken(decoded.id)) {
+                if (await DAO.hasToken(decoded.tokenid)) {
                     verified = true;
 
                 } else {

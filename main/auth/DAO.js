@@ -3,9 +3,9 @@
 const Database = require("../database/Database");
 
 class DAO {
-    static async createToken(tokenid, token, userid) {
+    static async createToken(tokenid, tokencontent, userid) {
         await Database.write("CREATE TABLE IF NOT EXISTS tokens (tokenid TEXT PRIMARY KEY, tokencontent TEXT NOT NULL, userid TEXT NOT NULL, FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE)");
-        await Database.write(`INSERT INTO tokens (tokenid, tokencontent, userid) VALUES ('${tokenid}', '${token}', '${userid}')`);
+        await Database.write(`INSERT INTO tokens (tokenid, tokencontent, userid) VALUES ('${tokenid}', '${tokencontent}', '${userid}')`);
     }
 
     static async getTokenById(tokenid) {
