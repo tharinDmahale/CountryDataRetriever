@@ -8,8 +8,9 @@ const DAO = require("./DAO");
 class AuthUtil {
     static async createAccessToken(user) {
         const tokenid = uuidv4();
-        const token = jwt.sign({tokenid: tokenid, userid: user.userid}, AuthConfig.getAccessTokenSecret());
-        await DAO.createToken(tokenid, token, user.userid);
+        const userid = user.userid;
+        const token = jwt.sign({tokenid: tokenid, userid: userid}, AuthConfig.getAccessTokenSecret());
+        await DAO.createToken(tokenid, token, userid);
         return (await DAO.getToken(tokenid));
     }
 
