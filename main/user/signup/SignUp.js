@@ -2,7 +2,7 @@
 
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-const Database = require("../../database/Database");
+const DAO = require("../DAO");
 const Response = require("../../common/Response.json");
 
 class SignUp {
@@ -25,9 +25,7 @@ class SignUp {
                 res.status(400).json(Response);
 
             } else {
-                const results = (await Database.read(`SELECT * FROM users WHERE username='${username}'`));
-
-                if (results.length > 0) {
+                if (await DAO.hasUser(username)) {
                     Response.data = {
                         error: "User already exists!"
                     }
@@ -37,11 +35,8 @@ class SignUp {
                 } else {
                     const id = uuidv4();
                     const hashedPassword = bcrypt.hashSync(password, 10);
-
-                    await Database.write("CREATE TABLE IF NOT EXISTS users (userid TEXT PRIMARY KEY, username TEXT UNIQUE, userpassword TEXT)");
-                    await Database.write(`INSERT INTO users (userid, username, userpassword) VALUES ('${id}', '${username}', '${hashedPassword}')`);
-
-                    const user = ((await Database.read(`SELECT * FROM users WHERE userid='${id}'`))[0]);
+                    await DAO.createUser(id, username, hashedPassword);
+                    const user = (await DAO.getUserById(id));
 
                     if (!user) {
                         Response.data = {
