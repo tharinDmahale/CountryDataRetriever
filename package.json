@@ -14,7 +14,9 @@
   "license": "ISC",
   "homepage": "https://github.com/tharinDmahale/6COSC022C-Advanced-Server-Side-Web-Programming-CW#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^5.1.0",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "uuid": "^11.1.0"
   }
 }

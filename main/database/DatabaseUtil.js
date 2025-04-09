@@ -7,45 +7,61 @@ class DatabaseUtil {
     static #db = sqlite3.verbose();
     static #connection;
 
-    static connect() {
-        this.#connection = new this.#db.Database(`./${DatabaseConfig.getName()}.db`, (err) => {
-            if (err) {
-                console.error("Error connecting to database! ", err);
-                throw err;
-            }
-        });        
-    }
+    static async connect() {
+        return new Promise((resolve, reject) => {
+            this.#connection = new this.#db.Database(`./${DatabaseConfig.getName()}.db`, (err) => {
+                if (err) {
+                    console.error("Error connecting to database! ", err);
+                    reject(err);
 
-    static insert(query) {
-        this.#connection.run(query, (err) => {
-            if (err) {
-                console.error("Error inserting data! ", err);
-                throw err;
-            }
+                } else {
+                    resolve(null);
+                }
+            });
         });
     }
 
-    static extract(query) {
-        let result = null;
+    static async insert(query) {
+        console.log("SQL : ", query);
+        return new Promise((resolve, reject) => {
+            this.#connection.run(query, (err) => {
+                if (err) {
+                    console.error("Error inserting data! ", err);
+                    reject(err);
 
-        this.#connection.all(query, [], (err, rows) => {
-            if (err) {
-                console.error("Error extracting data! ", err);
-                throw err;
-            } else {
-                result = rows;
-            }
+                } else {
+                    resolve(null);
+                }
+            });
         });
-
-        return result;
     }
 
-    static disconnect() {
-        this.#connection.close((err) => {
-            if (err) {
-                console.error("Error closing database connection! ", err);
-                throw err;
-            }
+    static async extract(query) {
+        console.log("SQL : ", query);
+        return new Promise((resolve, reject) => {
+            this.#connection.all(query, [], (err, rows) => {
+                if (err) {
+                    console.error("Error extracting data! ", err);
+                    reject(err);
+
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+    }
+
+    static async disconnect() {
+        return new Promise((resolve, reject) => {
+            this.#connection.close((err) => {
+                if (err) {
+                    console.error("Error closing database connection! ", err);
+                    reject(err);
+
+                } else {
+                    resolve(null);
+                }
+            });
         });
     }
 }
