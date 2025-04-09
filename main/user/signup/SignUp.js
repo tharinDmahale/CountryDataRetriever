@@ -7,9 +7,7 @@ const Response = require("../../common/Response.json");
 
 class SignUp {
     static getPath() {
-        Response.route = "SignUp";
-        Response.path = "/SignUp";
-        return Response.path;
+        return "/SignUp";
     }
 
     static async getBody(req, res) {

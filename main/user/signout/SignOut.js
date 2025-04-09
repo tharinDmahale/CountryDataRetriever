@@ -2,22 +2,21 @@
 
 const DAO = require("../DAO");
 const AuthUtil = require("../../auth/AuthUtil");
-const UserUtil = require("../UserUtil");
 const Response = require("../../common/Response.json");
 
-class SignIn {
+class SignOut {
     static getPath() {
-        return "/SignIn";
+        return "/SignOut";
     }
 
     static async getBody(req, res) {
         try {
             const username = req.body.username;
-            const password = req.body.password;
+            const auth = req.header("authorization");
 
-            if (!username || !password) {
+            if (!username || !auth) {
                 Response.data = {
-                    error: "Username and password are required!"
+                    error: "Username and or authorization header is required!"
                 }
 
                 res.status(400).json(Response);
@@ -25,22 +24,24 @@ class SignIn {
             } else {
                 if (await DAO.hasUser(username)) {
                     const user = (await DAO.getUserByName(username));
+                    const tokencontent = auth.split(" ")[1];
+                    const verified = await AuthUtil.verifyAccessToken(tokencontent);
 
-                    if (UserUtil.comparePassword(password, user.userpassword)) {
-                        const token = (await AuthUtil.createAccessToken(user));
+                    if (!verified) {
                         Response.data = {
-                            token: token,
-                            message: `User '${user.username}' signed in successfully!`
-                        }
-
-                        res.status(200).json(Response);
-
-                    } else {
-                        Response.data = {
-                            error: "Invalid password!"
+                            error: "Invalid token!"
                         }
 
                         res.status(401).json(Response);
+
+                    } else {
+                        await AuthUtil.deleteAccessToken(user);
+
+                        Response.data = {
+                            message: `User '${user.username}' signed out successfully!`
+                        }
+
+                        res.status(200).json(Response);
                     }
 
                 } else {
@@ -62,4 +63,4 @@ class SignIn {
     }
 }
 
-module.exports = SignIn;
+module.exports = SignOut;

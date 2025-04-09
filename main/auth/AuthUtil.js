@@ -10,7 +10,7 @@ class AuthUtil {
         let token;
         const userid = user.userid;
 
-        if (await DAO.userHasToken(user.userid)) {
+        if (await DAO.userHasToken(userid)) {
             token = (await DAO.getTokenByUserId(userid));
 
         } else {
@@ -23,11 +23,11 @@ class AuthUtil {
         return token;
     }
 
-    static async verifyAccessToken(token) {
+    static async verifyAccessToken(tokencontent) {
         let verified;
 
         try {
-            const decoded = jwt.verify(token, AuthConfig.getAccessTokenSecret());
+            const decoded = jwt.verify(tokencontent, AuthConfig.getAccessTokenSecret());
 
             if (!decoded) {
                 verified = false;
@@ -46,6 +46,14 @@ class AuthUtil {
         }
 
         return verified;
+    }
+
+    static async deleteAccessToken(user) {
+        const userid = user.userid;
+
+        if (await DAO.userHasToken(userid)) {
+            await DAO.deleteToken(userid);
+        }
     }
 }
 

@@ -26,8 +26,8 @@ class DAO {
         return (tokens.length > 0);
     }
 
-    static async deleteToken(tokenid) {
-        await Database.write(`DELETE FROM tokens WHERE tokenid='${tokenid}'`);
+    static async deleteToken(userid) {
+        await Database.write(`DELETE FROM tokens WHERE userid='${userid}'`);
     }
 }
 
