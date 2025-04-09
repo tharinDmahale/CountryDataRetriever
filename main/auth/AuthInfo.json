@@ -1,0 +1,4 @@
+{
+    "authType": "jwt",
+    "accessTokenSecret": "3f3d9206e748ec97333702a4f812627776d3c82cec73470475c67c5de95cc9243ccfec2dbc75d3f52b5b7e198d586b94037559562fbfb1e67d3cd72f838a3abf"
+}

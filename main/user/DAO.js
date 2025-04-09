@@ -13,6 +13,10 @@ class DAO {
         return (users.length > 0);
     }
 
+    static async getUserByName(username) {
+        return ((await Database.read(`SELECT * FROM users WHERE username='${username}'`))[0]);
+    }
+
     static async getUserById(id) {
         return ((await Database.read(`SELECT * FROM users WHERE userid='${id}'`))[0]);
     }

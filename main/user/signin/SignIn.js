@@ -1,14 +1,14 @@
 "use strict";
 
-const { v4: uuidv4 } = require("uuid");
 const DAO = require("../DAO");
+const AuthUtil = require("../../auth/AuthUtil");
 const UserUtil = require("../UserUtil");
 const Response = require("../../common/Response.json");
 
-class SignUp {
+class SignIn {
     static getPath() {
-        Response.route = "SignUp";
-        Response.path = "/SignUp";
+        Response.route = "SignIn";
+        Response.path = "/SignIn";
         return Response.path;
     }
 
@@ -26,34 +26,31 @@ class SignUp {
 
             } else {
                 if (await DAO.hasUser(username)) {
-                    Response.data = {
-                        error: "User already exists!"
-                    }
+                    const user = (await DAO.getUserByName(username));
 
-                    res.status(409).json(Response);
-
-                } else {
-                    const id = uuidv4();
-                    const hashedPassword = UserUtil.hashPassword(password);
-                    await DAO.createUser(id, username, hashedPassword);
-                    const user = (await DAO.getUserById(id));
-
-                    if (!user) {
+                    if (UserUtil.comparePassword(password, user.userpassword)) {
+                        const token = (await AuthUtil.createAccessToken(user));
                         Response.data = {
-                            error: "User creation failed!"
+                            token: token,
+                            message: `User '${user.username}' signed in successfully!`
                         }
 
-                        res.status(500).json(Response);
+                        res.status(200).json(Response);
 
                     } else {
                         Response.data = {
-                            id: user.userid,
-                            username: user.username,
-                            message: "User created successfully!"
+                            error: "Invalid password!"
                         }
 
-                        res.status(201).json(Response);
+                        res.status(401).json(Response);
                     }
+
+                } else {
+                    Response.data = {
+                        error: "User does not exist!"
+                    }
+
+                    res.status(404).json(Response);
                 }
             }
 
@@ -67,4 +64,4 @@ class SignUp {
     }
 }
 
-module.exports = SignUp;
+module.exports = SignIn;
