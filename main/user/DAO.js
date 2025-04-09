@@ -4,7 +4,7 @@ const Database = require("../database/Database");
 
 class DAO {
     static async createUser(id, username, hashedPassword) {
-        await Database.write("CREATE TABLE IF NOT EXISTS users (userid TEXT PRIMARY KEY, username TEXT UNIQUE, userpassword TEXT)");
+        //await Database.write(`CREATE TABLE IF NOT EXISTS users (userid TEXT PRIMARY KEY, username TEXT UNIQUE, userpassword TEXT)`);
         await Database.write(`INSERT INTO users (userid, username, userpassword) VALUES ('${id}', '${username}', '${hashedPassword}')`);
     }
 
