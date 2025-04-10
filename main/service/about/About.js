@@ -1,5 +1,6 @@
 "use strict";
 
+const openApiSpec = require("../../../openapi-spec.json");
 const Response = require("../../common/Response.json");
 
 class About {
@@ -9,9 +10,7 @@ class About {
 
     static getBody(req, res) {
         try {
-            Response.data = {
-                message: "This is the About page!"
-            }
+            Response.data = openApiSpec;
 
             res.status(200).json(Response);
 

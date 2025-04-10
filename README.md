@@ -3,6 +3,7 @@
 - Student name: Tharin Deelaka Mahale
 - IIT number: 20200709
 - UoW ID: W1833548
+- OpenAPI Specification: [./openapi-spec.json](./openapi-spec.json)
 
 
 ## How to run
@@ -18,6 +19,10 @@
 3. Use postman to perform requests.
 
 ## Endpoints
+
+### About
+URL: http://localhost:3000/ <br>
+Method: ```GET```
 
 ### Sign up
 URL: http://localhost:3000/SignUp <br>
@@ -72,7 +77,7 @@ Method: ```GET``` <br>
 Headers: ```authorization: Bearer tokencontent``` <br>
 Note: Requires authorization tokencontent from [Sign in](#sign-in) response.
 
-### Get country
+### Get region
 URL: http://localhost:3000/Region/{RegionName} <br>
 Method: ```GET``` <br>
 Headers: ```authorization: Bearer tokencontent``` <br>
