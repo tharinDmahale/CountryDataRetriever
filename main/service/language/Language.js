@@ -18,11 +18,20 @@ class Language {
             res.status(200).json(Response);
 
         } catch (err) {
-            Response.data = {
-                error: "Something went wrong!"
-            }
+            if (err.response) {
+                Response.data = {
+                    error: "Invalid parameter value!"
+                }
 
-            res.status(500).json(Response);
+                res.status(err.response.status).json(Response);
+                
+            } else {
+                Response.data = {
+                    error: "Something went wrong!"
+                }
+
+                res.status(500).json(Response);
+            }
         }
     }
 }

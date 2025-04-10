@@ -1,6 +1,7 @@
 "use strict";
 
 const axios = require("axios");
+const e = require("express");
 
 class ServiceUtil {
     static async getData(type, value) {
@@ -9,7 +10,7 @@ class ServiceUtil {
             return data;
 
         } catch (err) {
-            throw new Error("Failed to fetch data from the API!");
+            throw err;
         }
     }
 
@@ -19,7 +20,7 @@ class ServiceUtil {
             return data;
 
         } catch (err) {
-            throw new Error("Failed to fetch data from the API!");
+            throw err;
         }
     }
 }
