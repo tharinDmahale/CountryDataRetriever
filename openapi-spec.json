@@ -1,0 +1,215 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "6COSC022C-Advanced-Server-Side-Web-Programming-CW",
+        "description": "API for managing user authentication and retrieving country-related data.",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Tharin Deelaka Mahale",
+            "email": "tharin.20200709@iit.ac.lk"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/SignUp": {
+            "post": {
+                "summary": "Sign up a new user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "exampleUser"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "examplePassword"
+                                    }
+                                },
+                                "required": [
+                                    "username",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "User already exists"
+                    },
+                    "400": {
+                        "description": "Missing username or password"
+                    }
+                }
+            }
+        },
+        "/SignIn": {
+            "post": {
+                "summary": "Sign in an existing user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "exampleUser"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "examplePassword"
+                                    }
+                                },
+                                "required": [
+                                    "username",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User signed in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    },
+                    "400": {
+                        "description": "Missing username or password"
+                    }
+                }
+            }
+        },
+        "/SignOut": {
+            "delete": {
+                "summary": "Sign out a user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "exampleUser"
+                                    }
+                                },
+                                "required": [
+                                    "username"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Bearer token for authorization"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User signed out successfully"
+                    },
+                    "401": {
+                        "description": "Invalid or missing token"
+                    },
+                    "400": {
+                        "description": "Missing username or authorization header"
+                    }
+                }
+            }
+        },
+        "/Region/{RegionName}": {
+            "get": {
+                "summary": "Get region details",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "RegionName",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Name of the region"
+                    },
+                    {
+                        "in": "header",
+                        "name": "authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Bearer token for authorization"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Region details retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Invalid or missing token"
+                    },
+                    "404": {
+                        "description": "Region not found"
+                    }
+                }
+            }
+        }
+    }
+}
