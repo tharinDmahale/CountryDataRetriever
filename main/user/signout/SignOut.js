@@ -25,7 +25,7 @@ class SignOut {
                 if (await DAO.hasUser(username)) {
                     const user = (await DAO.getUserByName(username));
                     const tokencontent = auth.split(" ")[1];
-                    const verified = await AuthUtil.verifyAccessToken(tokencontent);
+                    const verified = (await AuthUtil.verifyAccessToken(tokencontent));
 
                     if (!verified) {
                         Response.data = {

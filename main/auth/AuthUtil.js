@@ -33,7 +33,7 @@ class AuthUtil {
                 verified = false;
 
             } else {
-                if (await DAO.hasToken(decoded.tokenid)) {
+                if ((await DAO.hasToken(decoded.tokenid)) && (await DAO.userHasToken(decoded.userid))) {
                     verified = true;
 
                 } else {
