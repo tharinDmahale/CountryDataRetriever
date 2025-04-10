@@ -3,7 +3,6 @@
 const SignUp = require("../user/signup/SignUp");
 const SignIn = require("../user/signin/SignIn");
 const SignOut = require("../user/signout/SignOut");
-const About = require("../service/about/About");
 const Auth = require("../auth/Auth");
 
 class Middleware {
@@ -12,7 +11,6 @@ class Middleware {
         app.use(SignUp.getPath(), SignUp.getBody);
         app.use(SignIn.getPath(), SignIn.getBody);
         app.use(SignOut.getPath(), SignOut.getBody);
-        app.use(About.getPath(), About.getBody);
         app.use(Auth.authenticate);
         app.use((req, res, next) => {
             res.on("finish", () => {
