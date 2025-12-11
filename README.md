@@ -1,4 +1,4 @@
-# 6COSC022C-Advanced-Server-Side-Web-Programming-CW
+# CountryDataRetriever
 
 - Student name: Tharin Deelaka Mahale
 - IIT number: 20200709
