@@ -1,5 +1,7 @@
 # CountryDataRetriever
 
+CountryDataRetriever is a Node.js Express server that provides a comprehensive REST API for accessing global country information. Built with authentication and database support, it allows users to sign up, log in, and retrieve detailed data about countries including their capitals, currencies, languages, regions, flags, and more. The server uses SQLite for data persistence and JWT tokens for secure API access. It can be deployed locally or via Docker, and includes full OpenAPI specification documentation for easy integration.
+
 - Student name: Tharin Deelaka Mahale
 - IIT number: 20200709
 - UoW ID: W1833548
